@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         when (view.getId()) {
             R.id.signOutButton -> {
                 auth.signOut()
-                val intent= Intent(this,RegisterActivity::class.java)
+                val intent= Intent(this,LoginActivity::class.java)
                 startActivity(intent)
             }
         }
