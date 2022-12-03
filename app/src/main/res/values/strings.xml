@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Deneme</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="password">Password</string>
+    <string name="tc_id">TC-ID</string>
+    <string name="log_n">Logın</string>
+    <string name="have_already_account_log_in">Have Already Account? Log In</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="verify_password">Verify Password</string>
+</resources>
