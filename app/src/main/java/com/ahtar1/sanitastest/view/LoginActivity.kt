@@ -1,6 +1,8 @@
 package com.ahtar1.sanitastest.view
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,52 +11,118 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.databinding.ActivityLoginBinding
-import com.ahtar1.sanitastest.databinding.ActivityMainBinding
 import com.ahtar1.sanitastest.viewmodel.LoginViewModel
-import com.ahtar1.sanitastest.viewmodel.RegisterViewModel
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
-
+    lateinit var sharedPreferences: SharedPreferences
+    private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     private lateinit var email:String
     private lateinit var password:String
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
     private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPreferences=this.getSharedPreferences("com.ahtar1.sanitastest",
+            Context.MODE_PRIVATE)
         viewModel= ViewModelProvider(this)[LoginViewModel::class.java]
+
         binding= ActivityLoginBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(R.layout.activity_login)
 
-        loginButton.setOnClickListener(loginlistener)
+        loginLoginButton.setOnClickListener(loginListener)
+        signUpLoginTextView.setOnClickListener(loginListener)
     }
-    private val loginlistener= View.OnClickListener { view ->
-        when (view.getId()) {
-            R.id.loginButton -> {
-                email= emailEditText.text.toString()
-                password= passwordEditText.text.toString()
-                viewModel.loginUser(email, password)
-                println("login listener")
+
+    private val loginListener= View.OnClickListener { view ->
+        when(view.id){
+            R.id.loginLoginButton-> {
+                loginProgressBar.visibility= View.VISIBLE
+
+                val email= emailEditText.text.toString()
+                val password= passwordLoginEditText.text.toString()
+
+                if (email.isEmpty()|| password.isEmpty()){
+                    if (email.isEmpty()){
+                        emailEditText.error= "Enter your email"
+                    }
+                    if(password.isEmpty()){
+                        passwordLoginEditText.error= "Enter your password"
+                    }
+                    loginProgressBar.visibility= View.GONE
+                } else if(!email.matches(emailPattern.toRegex())){
+                    loginProgressBar.visibility= View.GONE
+                    emailEditText.error= "Enter a valid email"
+                } else if(password.length<6){
+                    loginProgressBar.visibility= View.GONE
+                    passwordLoginEditText.error= "Enter password longer than 6 characters"
+                } else{
+                    viewModel.loginUser(email, password)
+                    loginProgressBar.visibility= View.GONE
+
+                }
                 viewModel.isSuccessful.observe(this, Observer { isSuccessful->
                     isSuccessful?.let {
                         if (isSuccessful){
                             println("successful")
-                            Toast.makeText(this,"Successfully saved", Toast.LENGTH_LONG).show()
-                            val intent= Intent(this,MainActivity::class.java)
-                            startActivity(intent)
+                            viewModel.getRole()
+                            viewModel.isDoctor.observe(this, Observer {
+                                if(it){
+                                    println("doktor")
+                                    println(viewModel.isDoctor.toString())
+                                    sharedPreferences.edit().putString("role","Doctor").apply()
+                                    println(sharedPreferences.getString("role","a"))
+                                    val intent= Intent(this,DoctorActivity::class.java)
+                                    startActivity(intent)
+                                } else{
+                                    println("a "+ viewModel.isDoctor)
+                                    println("patient")
+                                    sharedPreferences.edit().putString("role","Patient").apply()
+                                    println(sharedPreferences.getString("role","a"))
+
+                                    val intent= Intent(this,PatientActivity::class.java)
+                                    startActivity(intent)
+                                }
+                            })
+                            /*
+                            if(viewModel.isDoctor){
+                                println("doktor")
+                                println(viewModel.isDoctor.toString())
+                                sharedPreferences.edit().putString("role","Doctor").apply()
+                                println(sharedPreferences.getString("role","a"))
+                                val intent= Intent(this,DoctorActivity::class.java)
+                                startActivity(intent)
+                            } else{
+                                println("a "+ viewModel.isDoctor)
+                                println("patient")
+                                sharedPreferences.edit().putString("role","Patient").apply()
+                                println(sharedPreferences.getString("role","a"))
+
+                                val intent= Intent(this,PatientActivity::class.java)
+                                startActivity(intent)
+                            }
+
+                             */
+
                         } else{
                             println("fail")
-                            Toast.makeText(this,viewModel.errorMessage.value, Toast.LENGTH_LONG).show()
+                            Toast.makeText(this,"Email or password is wrong",Toast.LENGTH_LONG).show()
                         }
                     }
 
                 })
             }
+            R.id.signUpLoginTextView-> {
+                val intent= Intent(this,RegisterActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
+
+
+
 
 }
