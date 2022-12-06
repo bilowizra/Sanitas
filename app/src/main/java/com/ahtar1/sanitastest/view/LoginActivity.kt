@@ -35,13 +35,44 @@ class LoginActivity : AppCompatActivity() {
 
         loginLoginButton.setOnClickListener(loginListener)
         signUpLoginTextView.setOnClickListener(loginListener)
+        viewModel.isSuccessful.observe(this, Observer { isSuccessful->
+            isSuccessful?.let {
+                if (isSuccessful){
+                    println("successful")
+                    viewModel.isDoctor.observe(this, Observer {
+                        onContentChanged()
+                        if(it){
+                            println("doktor")
+                            println(viewModel.isDoctor.toString())
+                            sharedPreferences.edit().putString("role","Doctor").apply()
+                            println(sharedPreferences.getString("role","a"))
+                            val intent= Intent(this,DoctorActivity::class.java)
+                            startActivity(intent)
+                        } else{
+                            println("a "+ viewModel.isDoctor)
+                            println("patient")
+                            sharedPreferences.edit().putString("role","Patient").apply()
+                            println(sharedPreferences.getString("role","a"))
+
+                            val intent= Intent(this,PatientActivity::class.java)
+                            startActivity(intent)
+                        }
+                    })
+
+
+                } else{
+                    println("fail")
+                    Toast.makeText(this,"Email or password is wrong",Toast.LENGTH_LONG).show()
+                }
+            }
+
+        })
     }
 
     private val loginListener= View.OnClickListener { view ->
         when(view.id){
             R.id.loginLoginButton-> {
                 loginProgressBar.visibility= View.VISIBLE
-
                 val email= emailEditText.text.toString()
                 val password= passwordLoginEditText.text.toString()
 
@@ -64,57 +95,9 @@ class LoginActivity : AppCompatActivity() {
                     loginProgressBar.visibility= View.GONE
 
                 }
-                viewModel.isSuccessful.observe(this, Observer { isSuccessful->
-                    isSuccessful?.let {
-                        if (isSuccessful){
-                            println("successful")
-                            viewModel.getRole()
-                            viewModel.isDoctor.observe(this, Observer {
-                                if(it){
-                                    println("doktor")
-                                    println(viewModel.isDoctor.toString())
-                                    sharedPreferences.edit().putString("role","Doctor").apply()
-                                    println(sharedPreferences.getString("role","a"))
-                                    val intent= Intent(this,DoctorActivity::class.java)
-                                    startActivity(intent)
-                                } else{
-                                    println("a "+ viewModel.isDoctor)
-                                    println("patient")
-                                    sharedPreferences.edit().putString("role","Patient").apply()
-                                    println(sharedPreferences.getString("role","a"))
 
-                                    val intent= Intent(this,PatientActivity::class.java)
-                                    startActivity(intent)
-                                }
-                            })
-                            /*
-                            if(viewModel.isDoctor){
-                                println("doktor")
-                                println(viewModel.isDoctor.toString())
-                                sharedPreferences.edit().putString("role","Doctor").apply()
-                                println(sharedPreferences.getString("role","a"))
-                                val intent= Intent(this,DoctorActivity::class.java)
-                                startActivity(intent)
-                            } else{
-                                println("a "+ viewModel.isDoctor)
-                                println("patient")
-                                sharedPreferences.edit().putString("role","Patient").apply()
-                                println(sharedPreferences.getString("role","a"))
-
-                                val intent= Intent(this,PatientActivity::class.java)
-                                startActivity(intent)
-                            }
-
-                             */
-
-                        } else{
-                            println("fail")
-                            Toast.makeText(this,"Email or password is wrong",Toast.LENGTH_LONG).show()
-                        }
-                    }
-
-                })
             }
+
             R.id.signUpLoginTextView-> {
                 val intent= Intent(this,RegisterActivity::class.java)
                 startActivity(intent)

@@ -45,22 +45,6 @@ class MainActivity : AppCompatActivity() {
             println("empty")
         }
 
-        /*
-        if (viewModel.isDoctor){
-
-            sharedPreferences.edit().putString("role","Doctor").apply()
-            val intent= Intent(this,DoctorActivity::class.java)
-            startActivity(intent)
-        }else{
-            sharedPreferences.edit().putString("role","Patient").apply()
-            val intent= Intent(this,PatientActivity::class.java)
-            startActivity(intent)
-        }
-
-         */
-
-
-
         signOutButton.setOnClickListener(signOutListener)
 
     }

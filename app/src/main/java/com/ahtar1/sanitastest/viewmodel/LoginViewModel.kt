@@ -27,14 +27,15 @@ class LoginViewModel: ViewModel() {
     var errorMessage= MutableLiveData<String>()
     var isDoctor= MutableLiveData<Boolean>()
 
-    fun loginUser(email: String,password: String){
+    fun loginUser(email: String,password: String)= CoroutineScope(Dispatchers.Main).launch{
 
         auth= FirebaseAuth.getInstance()
         auth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
             if(it.isSuccessful){
-                isSuccessful.postValue(true)
+                isSuccessful.value=true
+                getRole()
             } else{
-                isSuccessful.postValue(false)
+                isSuccessful.value= false
                 errorMessage.postValue("başaramadık abi")
             }
         }
@@ -55,43 +56,9 @@ class LoginViewModel: ViewModel() {
                 println("gr "+role)
                 isDoctor.postValue(false)
             }
-            /*
-            Firebase.firestore.collection("users").whereEqualTo("uuid",auth.currentUser!!.uid).get().addOnCompleteListener {
-                if(it.isSuccessful){
-                    val querySnapshot= it.result
-                    val role= querySnapshot.documents[0].get("role")
-                    println(role)
-                    if(role =="Doctor"){
-                        println("gr "+role)
-                        isDoctor.postValue(true)
-                    } else{
-                        println("gr "+role)
-                        isDoctor.postValue(false)
-                    }
-                }else{
-                    println("not successful")
-                }
-            }
 
-             */
-
-
-
-            /*
-            println(auth.currentUser!!.uid)
-            val role= querySnapshot["role"]
-            println(role)
-            if(role =="Doctor"){
-                println("gr "+role)
-                isDoctor.postValue(true)
-            } else{
-                println("gr "+role)
-                isDoctor.postValue(false)
-            }
-
-             */
         } catch (e: Exception){
-            println("determinerole")
+            println("determine role")
             println(e.message)
         }
     }

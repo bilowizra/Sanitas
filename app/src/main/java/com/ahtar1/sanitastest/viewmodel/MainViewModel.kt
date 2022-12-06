@@ -19,15 +19,7 @@ import java.lang.StringBuilder
 
 class MainViewModel: ViewModel() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: FirebaseDatabase
     var isDoctor=false
-
-    fun isSigned(){
-        auth= FirebaseAuth.getInstance()
-        if(auth.currentUser==null){
-
-        }
-    }
 
     fun getRole()= CoroutineScope(Dispatchers.Main).launch{
         auth= FirebaseAuth.getInstance()

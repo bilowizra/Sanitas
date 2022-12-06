@@ -26,8 +26,6 @@ class RegisterViewModel: ViewModel() {
     var isSuccessful= MutableLiveData<Boolean>()
     var role= MutableLiveData<String>()
     var errorMessage= MutableLiveData<String>()
-    var tcExists= MutableLiveData<Boolean>()
-
 
 
     fun registerNewUser(email: String, password: String, tc: String){
@@ -43,20 +41,13 @@ class RegisterViewModel: ViewModel() {
             }
         }
 
-
-
-        //val doctorsDatabaseRef= database.reference.child("doctors").child("").
-        //val query = doctorsDatabaseRef.orderByKey().equalTo(tc).
-
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
             if(it.isSuccessful){
                 println("kullanıcı üretme başarılı")
 
                 val databaseRef= Firebase.firestore.collection("users")
-                // val databaseRef= database.reference.child("users").child(auth.currentUser!!.uid)
 
                 val user: User= User(email, tc,role.value,auth.currentUser!!.uid)
-                //etValue(user)
                 databaseRef.add(user).addOnCompleteListener { task->
                     if (task.isSuccessful){
                         println("b")
@@ -78,35 +69,6 @@ class RegisterViewModel: ViewModel() {
         }
     }
 
-    fun isTcExists(tc: String){
-        CoroutineScope(Dispatchers.Main).launch {
-            var querySnapshot=FirebaseFirestore.getInstance().collection("users").whereEqualTo("tc",tc).get().await()
-            if(querySnapshot.documents.isEmpty()){
-                println("if "+querySnapshot.documents.isEmpty())
-                tcExists.postValue(false)
-            } else{
-                println("else "+querySnapshot.documents.isEmpty())
-                tcExists.postValue(true)
-            }
-            /*
-            querySnapshot.addOnCompleteListener {
-                if (it.isSuccessful){
-                    if(it.result.isEmpty){
-                        println(it.result.isEmpty)
-                        tcExists.postValue(false)
-                    }else{
-                        println(it.result.isEmpty)
-                        tcExists.postValue(true)
-                    }
-                } else{
-                    println(it.exception?.message)
-                }
 
-
-            }
-
-             */
-        }
-    }
 
 }
