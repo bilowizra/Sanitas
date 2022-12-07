@@ -26,9 +26,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var password:String
     private lateinit var tc:String
     private lateinit var verifyPassword:String
-    private lateinit var binding: ActivityRegisterBinding
     private lateinit var viewModel: RegisterViewModel
-    private var isTcExistsVal= true
+    private var isTcExistsVal:Boolean?= null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +37,6 @@ class RegisterActivity : AppCompatActivity() {
             systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE
         }
 
-        binding= ActivityRegisterBinding.inflate(layoutInflater)
         viewModel= ViewModelProvider(this)[RegisterViewModel::class.java]
 
         println("girmeden önce")
@@ -90,7 +88,7 @@ class RegisterActivity : AppCompatActivity() {
                 password= passwordRegisterEditText.text.toString()
                 tc = tcIdEditText.text.toString()
                 verifyPassword= verifyPasswordEditText.text.toString()
-                isTcExists(tc)
+
                 if (email.isEmpty()|| password.isEmpty()|| tc.isEmpty()|| verifyPassword.isEmpty()){
                     if (email.isEmpty()){
                         emailRegisterEditText.error = "Enter your email"
@@ -126,15 +124,22 @@ class RegisterActivity : AppCompatActivity() {
                     registerProgressBar.visibility= View.GONE
                     tcIdEditText.error="Enter a valid TC-ID"
                 } else{
-
-                    if(isTcExistsVal){
-                        viewModel.registerNewUser(email,password,tc)
-                        println("observe")
+                    isTcExists(tc)
+                    /*
+                    if(isTcExistsVal==null){
+                        Toast.makeText(this,"There is a problem with internet connection",Toast.LENGTH_LONG).show()
+                        registerProgressBar.visibility= View.GONE
+                    }
+                    else if(isTcExistsVal==false){
                         println("girdi")
+                        viewModel.registerNewUser(email,password,tc)
+
                     } else{
                         registerProgressBar.visibility= View.GONE
                         tcIdEditText.error="TC-ID already exists"
                     }
+
+                     */
 
                 }
 
@@ -161,16 +166,24 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun isTcExists(tc: String){
-        CoroutineScope(Dispatchers.Main).launch {
-            var querySnapshot=
-                FirebaseFirestore.getInstance().collection("users").whereEqualTo("tc",tc).get().await()
-            if(querySnapshot.documents.isEmpty()){
-                println("if "+querySnapshot.documents.isEmpty())
-                isTcExistsVal= false
-            } else{
-                println("else "+querySnapshot.documents.isEmpty())
-                isTcExistsVal= true
-            }
+        CoroutineScope(Dispatchers.IO).launch {
+                FirebaseFirestore.getInstance().collection("users").whereEqualTo("tc",tc).get().addOnCompleteListener {
+                    if (it.isSuccessful){
+                        if(it.result.documents.isEmpty()){
+                            println("if "+it.result.documents.isEmpty())
+                            println("girdi")
+                            viewModel.registerNewUser(email,password,tc)
+                        } else{
+                            println("else "+it.result.documents.isEmpty())
+                            registerProgressBar.visibility= View.GONE
+                            tcIdEditText.error="TC-ID already exists"
+                        }
+                    } else{
+                        Toast.makeText(this@RegisterActivity,"There is a problem with internet connection",Toast.LENGTH_LONG).show()
+                        registerProgressBar.visibility= View.GONE
+                    }
+                }
+
 
         }
     }

@@ -29,6 +29,7 @@ class RegisterViewModel: ViewModel() {
 
 
     fun registerNewUser(email: String, password: String, tc: String){
+        println("register new user")
         auth= FirebaseAuth.getInstance()
         database= Firebase.database("https://sanitas-8090c-default-rtdb.europe-west1.firebasedatabase.app")
         CoroutineScope(Dispatchers.Main).launch {
@@ -63,6 +64,7 @@ class RegisterViewModel: ViewModel() {
                 println("e")
 
             } else{
+                println("kullanıcı üretilemedi")
                 isSuccessful.postValue(false)
                 errorMessage.postValue(it.exception!!.message)
             }

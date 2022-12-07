@@ -11,29 +11,30 @@
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/passwordLoginEditText"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="48dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="35dp"
         android:hint="@string/password"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/loginLoginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditText"
-        tools:ignore="MissingConstraints"
-        android:inputType="textPassword"/>
+        tools:ignore="MissingConstraints" />
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/emailEditText"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="48dp"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="344dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="36dp"
         android:hint="@string/e_mail"
         app:layout_constraintBottom_toTopOf="@+id/passwordLoginEditText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -41,7 +42,7 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginLoginButton"
         android:layout_width="167dp"
-        android:layout_height="0dp"
+        android:layout_height="46dp"
         android:layout_marginBottom="266dp"
         android:background="#D03B3B"
         android:text="@string/log_n"

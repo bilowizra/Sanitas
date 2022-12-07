@@ -17,9 +17,6 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
     lateinit var sharedPreferences: SharedPreferences
     private val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-    private lateinit var email:String
-    private lateinit var password:String
-    private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +26,6 @@ class LoginActivity : AppCompatActivity() {
             Context.MODE_PRIVATE)
         viewModel= ViewModelProvider(this)[LoginViewModel::class.java]
 
-        binding= ActivityLoginBinding.inflate(layoutInflater)
-        val view = binding.root
         setContentView(R.layout.activity_login)
 
         loginLoginButton.setOnClickListener(loginListener)
@@ -40,7 +35,6 @@ class LoginActivity : AppCompatActivity() {
                 if (isSuccessful){
                     println("successful")
                     viewModel.isDoctor.observe(this, Observer {
-                        onContentChanged()
                         if(it){
                             println("doktor")
                             println(viewModel.isDoctor.toString())
@@ -62,11 +56,15 @@ class LoginActivity : AppCompatActivity() {
 
                 } else{
                     println("fail")
-                    Toast.makeText(this,"Email or password is wrong",Toast.LENGTH_LONG).show()
+                    viewModel.errorMessage.observe(this, Observer {
+                        Toast.makeText(this,it,Toast.LENGTH_LONG).show()
+                    })
+
                 }
             }
 
         })
+
     }
 
     private val loginListener= View.OnClickListener { view ->
@@ -92,6 +90,7 @@ class LoginActivity : AppCompatActivity() {
                     passwordLoginEditText.error= "Enter password longer than 6 characters"
                 } else{
                     viewModel.loginUser(email, password)
+
                     loginProgressBar.visibility= View.GONE
 
                 }

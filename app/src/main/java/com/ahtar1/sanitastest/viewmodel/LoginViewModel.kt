@@ -36,7 +36,7 @@ class LoginViewModel: ViewModel() {
                 getRole()
             } else{
                 isSuccessful.value= false
-                errorMessage.postValue("başaramadık abi")
+                errorMessage.postValue(it.exception?.message)
             }
         }
     }

@@ -12,7 +12,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/emailRegisterEditText"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="22dp"
@@ -26,7 +26,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tcIdEditText"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="325dp"
             android:layout_marginEnd="12dp"
@@ -41,17 +41,17 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordRegisterEditText"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="48dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginBottom="20dp"
             android:hint="@string/password"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toTopOf="@+id/verifyPasswordEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/emailRegisterEditText"
-            tools:ignore="MissingConstraints"
-            android:inputType="textPassword"/>
+            tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/signUpRegisterButton"
@@ -87,17 +87,17 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/verifyPasswordEditText"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="48dp"
             android:layout_marginStart="11dp"
             android:layout_marginEnd="11dp"
             android:layout_marginBottom="253dp"
             android:hint="@string/verify_password"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordRegisterEditText"
-            tools:ignore="MissingConstraints"
-            android:inputType="textPassword"/>
+            tools:ignore="MissingConstraints" />
 
         <ProgressBar
             android:id="@+id/registerProgressBar"
