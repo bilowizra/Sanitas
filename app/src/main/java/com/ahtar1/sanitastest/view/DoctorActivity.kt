@@ -17,7 +17,7 @@ class DoctorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDoctorBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        replaceFragment(doctor_profile())
+        replaceFragment(doctor_schedule())
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
