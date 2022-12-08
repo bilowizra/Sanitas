@@ -6,3 +6,4 @@ data class User(
     var role:String?= null,
     var uid:String?= null
 )
+
