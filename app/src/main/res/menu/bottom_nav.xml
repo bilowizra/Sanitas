@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Profile"
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_baseline_account_circle_24"/>
+    <item android:title="Schedule"
+        android:id="@+id/schedule"
+        android:icon="@drawable/ic_baseline_date_range_24"/>
+</menu>
