@@ -5,17 +5,16 @@ import java.util.Date
 
 data class Patient(
     var name:String?= null,
-    var surname:String?= null,
-    var birthdate:Date?= null,
+    var birthdate:String?= null,
     var age:Int?=null,
-    var gender:Gender?= null,
-    var weight:Double?= null,
-    var height:Double?= null,
+    var gender:String?= null,
+    var weight:Int?= null,
+    var height:Int?= null,
     var bmi:Float?= null,
-    var bloodType:BloodType?= null,
-    var allergies:List<String>?= null,
+    var bloodType:String?= null,
+    var allergies:String?= null,
     var spokenLanguage:String?= null,
-    var phoneNumber: BigInteger?= null,
-    var tc:BigInteger?= null,
+    var phoneNumber: Int?= null,
+    var tc:Int?= null,
     var uid:String?= null
 )

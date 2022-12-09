@@ -1,7 +1,7 @@
 package com.ahtar1.sanitastest.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.databinding.ActivityPatientBinding
@@ -34,6 +34,10 @@ class PatientActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onBackPressed() {
+        // Do Here what ever you want do on back press;
     }
 
     private fun replaceFragment(fragment: Fragment) {

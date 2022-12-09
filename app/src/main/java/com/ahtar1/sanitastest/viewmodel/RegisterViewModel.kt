@@ -28,7 +28,7 @@ class RegisterViewModel: ViewModel() {
     var errorMessage= MutableLiveData<String>()
 
 
-    fun registerNewUser(email: String, password: String, tc: String){
+    fun registerNewUser(email: String, password: String, tc: String,name: String){
         println("register new user")
         auth= FirebaseAuth.getInstance()
         database= Firebase.database("https://sanitas-8090c-default-rtdb.europe-west1.firebasedatabase.app")
@@ -48,7 +48,7 @@ class RegisterViewModel: ViewModel() {
 
                 val databaseRef= Firebase.firestore.collection("users")
 
-                val user: User= User(email, tc,role.value,auth.currentUser!!.uid)
+                val user: User= User(email, tc,role.value,auth.currentUser!!.uid,name)
                 databaseRef.add(user).addOnCompleteListener { task->
                     if (task.isSuccessful){
                         println("b")

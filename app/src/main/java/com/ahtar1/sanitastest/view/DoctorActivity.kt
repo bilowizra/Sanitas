@@ -1,14 +1,10 @@
 package com.ahtar1.sanitastest.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract.Profile
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.databinding.ActivityDoctorBinding
-import com.ahtar1.sanitastest.view.doctor_profile
-import com.ahtar1.sanitastest.view.doctor_schedule
-import kotlinx.android.synthetic.main.activity_doctor.*
 
 class DoctorActivity : AppCompatActivity() {
 
@@ -28,6 +24,9 @@ class DoctorActivity : AppCompatActivity() {
             true
         }
 
+    }
+    override fun onBackPressed() {
+        // Do Here what ever you want do on back press;
     }
 
     private fun replaceFragment(fragment: Fragment){

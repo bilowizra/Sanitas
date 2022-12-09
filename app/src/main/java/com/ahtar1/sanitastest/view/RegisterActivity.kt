@@ -14,6 +14,7 @@ import com.ahtar1.sanitastest.databinding.ActivityRegisterBinding
 import com.ahtar1.sanitastest.viewmodel.RegisterViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var password:String
     private lateinit var tc:String
     private lateinit var verifyPassword:String
+    private lateinit var name:String
     private lateinit var viewModel: RegisterViewModel
     private var isTcExistsVal:Boolean?= null
 
@@ -88,8 +90,9 @@ class RegisterActivity : AppCompatActivity() {
                 password= passwordRegisterEditText.text.toString()
                 tc = tcIdEditText.text.toString()
                 verifyPassword= verifyPasswordEditText.text.toString()
+                name= nameRegisterEditText.text.toString()
 
-                if (email.isEmpty()|| password.isEmpty()|| tc.isEmpty()|| verifyPassword.isEmpty()){
+                if (email.isEmpty()|| password.isEmpty()|| tc.isEmpty()|| verifyPassword.isEmpty() || name.isEmpty()){
                     if (email.isEmpty()){
                         emailRegisterEditText.error = "Enter your email"
                     }
@@ -101,6 +104,9 @@ class RegisterActivity : AppCompatActivity() {
                     }
                     if (verifyPassword.isEmpty()){
                         verifyPasswordEditText.error = "Reenter your password"
+                    }
+                    if (name.isEmpty()){
+                        nameRegisterEditText.error = "Enter your name"
                     }
 
                     registerProgressBar.visibility= View.GONE
@@ -125,6 +131,8 @@ class RegisterActivity : AppCompatActivity() {
                     tcIdEditText.error="Enter a valid TC-ID"
                 } else{
                     isTcExists(tc)
+
+
                     /*
                     if(isTcExistsVal==null){
                         Toast.makeText(this,"There is a problem with internet connection",Toast.LENGTH_LONG).show()
@@ -172,7 +180,8 @@ class RegisterActivity : AppCompatActivity() {
                         if(it.result.documents.isEmpty()){
                             println("if "+it.result.documents.isEmpty())
                             println("girdi")
-                            viewModel.registerNewUser(email,password,tc)
+                            sharedPreferences.edit().putString("name",name).apply()
+                            viewModel.registerNewUser(email,password,tc,name)
                         } else{
                             println("else "+it.result.documents.isEmpty())
                             registerProgressBar.visibility= View.GONE
