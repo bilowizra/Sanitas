@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.viewmodel.PatientProfileViewModel
@@ -32,6 +33,8 @@ class patient_profile : Fragment() {
         viewModel= ViewModelProvider(this)[PatientProfileViewModel::class.java]
         sharedPreferences=this.requireActivity().getSharedPreferences("com.ahtar1.sanitastest",
             Context.MODE_PRIVATE)
+
+
     }
 
     override fun onCreateView(
@@ -55,7 +58,65 @@ class patient_profile : Fragment() {
         allergiesValueTextView.isEnabled = false
         phoneValueTextView6.isEnabled = false
         languageValueTextView.isEnabled = false
-
+        viewModel.getPatient()
+        viewModel.getTc.observe(viewLifecycleOwner, Observer {
+            tcValueTextView6.setText(it)
+        })
+        viewModel.getName.observe(viewLifecycleOwner, Observer {
+            nameTextView.setText(it)
+        })
+        viewModel.birthdate.observe(viewLifecycleOwner, Observer {
+            birthdateValueTextView.setText(it)
+        })
+        viewModel.age.observe(viewLifecycleOwner, Observer {
+            ageValueTextView.setText(it.toString())
+        })
+        viewModel.gender.observe(viewLifecycleOwner, Observer {
+            if(viewModel.gender.equals("Male")){
+                genderValueTextView.setSelection(0)
+            } else if(viewModel.gender.equals("Female")){
+                genderValueTextView.setSelection(1)
+            } else if(viewModel.gender.equals("Other")){
+                genderValueTextView.setSelection(2)
+            }
+        })
+        viewModel.weight.observe(viewLifecycleOwner, Observer {
+            weightValueTextView.setText(it.toString())
+        })
+        viewModel.height.observe(viewLifecycleOwner, Observer {
+            heightValueTextView.setText(it.toString())
+        })
+        viewModel.bmi.observe(viewLifecycleOwner, Observer {
+            bmiValueTextView.setText(it.toString())
+        })
+        viewModel.bloodType.observe(viewLifecycleOwner, Observer {
+            if (viewModel.bloodType.equals("A+")){
+                bloodTypeValueTextView.setSelection(0)
+            } else if (viewModel.bloodType.equals("A-")){
+                bloodTypeValueTextView.setSelection(1)
+            } else if (viewModel.bloodType.equals("B+")){
+                bloodTypeValueTextView.setSelection(2)
+            } else if (viewModel.bloodType.equals("B-")){
+                bloodTypeValueTextView.setSelection(3)
+            } else if (viewModel.bloodType.equals("AB+")){
+                bloodTypeValueTextView.setSelection(4)
+            } else if (viewModel.bloodType.equals("AB-")){
+                bloodTypeValueTextView.setSelection(5)
+            } else if (viewModel.bloodType.equals("O+")){
+                bloodTypeValueTextView.setSelection(6)
+            } else if (viewModel.bloodType.equals("O-")){
+                bloodTypeValueTextView.setSelection(7)
+            }
+        })
+        viewModel.allergies.observe(viewLifecycleOwner, Observer {
+            allergiesValueTextView.setText(it)
+        })
+        viewModel.language.observe(viewLifecycleOwner, Observer {
+            languageValueTextView.setText(it)
+        })
+        viewModel.phone.observe(viewLifecycleOwner, Observer {
+            phoneValueTextView6.setText(it)
+        })
 
 
         editProfileButton.setOnClickListener {
@@ -94,7 +155,7 @@ class patient_profile : Fragment() {
                 val height = heightValueTextView.text.toString().toInt()
                 val weight = weightValueTextView.text.toString().toInt()
                 val allergies = allergiesValueTextView.text.toString()
-                val phone = phoneValueTextView6.text.toString().toInt()
+                val phone = phoneValueTextView6.text.toString()
                 val language = languageValueTextView.text.toString()
                 val bmi = (weight.toString().toDouble()/(height.toString().toDouble()*height.toString().toDouble())).toFloat()*10000
                 val name=sharedPreferences.getString("name","N/A")
@@ -120,6 +181,8 @@ class patient_profile : Fragment() {
 
 
         }
+
+
     }
 
 
