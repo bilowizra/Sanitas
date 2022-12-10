@@ -34,7 +34,6 @@ class patient_profile : Fragment() {
         sharedPreferences=this.requireActivity().getSharedPreferences("com.ahtar1.sanitastest",
             Context.MODE_PRIVATE)
 
-
     }
 
     override fun onCreateView(

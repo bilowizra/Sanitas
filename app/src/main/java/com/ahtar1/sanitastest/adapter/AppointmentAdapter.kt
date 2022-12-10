@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ahtar1.sanitastest.databinding.RecyclerViewRowBinding
 import com.ahtar1.sanitastest.model.DisplayAppointment
 
-class AppointmentAdapter(private val appointmentList: ArrayList<DisplayAppointment>): RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder>() {
+class AppointmentAdapter(val appointmentList: ArrayList<DisplayAppointment>): RecyclerView.Adapter<AppointmentAdapter.AppointmentHolder>() {
 
     class AppointmentHolder(val binding: RecyclerViewRowBinding): RecyclerView.ViewHolder(binding.root) {
     }
@@ -19,8 +19,11 @@ class AppointmentAdapter(private val appointmentList: ArrayList<DisplayAppointme
 
     override fun onBindViewHolder(holder: AppointmentHolder, position: Int) {
         holder.binding.doctorNameValueTextView.text=appointmentList[position].doctorName
+        println("viewHolder"+appointmentList[position].doctorName)
         holder.binding.dateValueTextView.text=appointmentList[position].date
+        println(appointmentList[position].date)
         holder.binding.timeValueTextView.text=appointmentList[position].time
+        println(appointmentList[position].time)
     }
 
     override fun getItemCount(): Int {

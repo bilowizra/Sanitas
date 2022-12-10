@@ -15,10 +15,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class PatientScheduleViewModel:ViewModel() {
-    lateinit var appointmentsList:  ArrayList<DisplayAppointment>
+    var appointmentsList:  ArrayList<DisplayAppointment> = arrayListOf()
 
     fun getAppointments(){
-        appointmentsList= arrayListOf()
         CoroutineScope(Dispatchers.Main).launch {
             val auth= FirebaseAuth.getInstance()
             val uid = auth.currentUser!!.uid
@@ -34,8 +33,10 @@ class PatientScheduleViewModel:ViewModel() {
                 val date = document.get("date").toString()
                 val time = document.get("time").toString()
                 val doctor = document.get("doctorTc").toString()
+                println("doctor name: "+doctor)
                 //get patient name from patient collection using patient tc
                 val query2: QuerySnapshot = FirebaseFirestore.getInstance().collection("doctors").whereEqualTo("tc",doctor).get().await()
+
                 val doctorName= query2.documents[0].get("name").toString()
 
                 println(date)
