@@ -53,21 +53,8 @@ class MainActivity : AppCompatActivity() {
             println("empty")
         }
 
-        //signOutButton.setOnClickListener(signOutListener)
 
     }
 
-    /*
-    private val signOutListener= View.OnClickListener { view ->
-        when (view.getId()) {
-            R.id.signOutButton -> {
-                auth.signOut()
-                sharedPreferences.edit().putString("role","empty")
-                val intent= Intent(this,LoginActivity::class.java)
-                startActivity(intent)
-            }
-        }
-    }
 
-     */
 }
