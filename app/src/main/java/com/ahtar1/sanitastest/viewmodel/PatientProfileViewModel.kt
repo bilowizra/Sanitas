@@ -29,7 +29,7 @@ class PatientProfileViewModel: ViewModel() {
     private lateinit var database: FirebaseDatabase
     private lateinit var tc: String
     private lateinit var name: String
-    var getName = MutableLiveData<String>()
+    var getName = MutableLiveData<String>().apply { postValue("N/A") }
     var birthdate= MutableLiveData<String>()
     var age= MutableLiveData<Int>()
     var gender= MutableLiveData<String>()
@@ -85,29 +85,39 @@ class PatientProfileViewModel: ViewModel() {
     }
     fun getPatient(){
         auth= FirebaseAuth.getInstance()
-        database= Firebase.database("https://sanitas-8090c-default-rtdb.europe-west1.firebasedatabase.app")
+        //database= Firebase.database("https://sanitas-8090c-default-rtdb.europe-west1.firebasedatabase.app")
 
         val user= auth.currentUser
         val uid= user!!.uid
         CoroutineScope(Dispatchers.Main).launch {
+            val query: QuerySnapshot = FirebaseFirestore.getInstance().collection("users").whereEqualTo("uid",uid).get().await()
+            tc = query.documents[0].get("tc").toString()
+            name = query.documents[0].get("name").toString()
 
 
             val uidQuery: QuerySnapshot = FirebaseFirestore.getInstance().collection("patients").whereEqualTo("uid",uid).get().await()
+            if(uidQuery.documents.isEmpty()){
+                getName.postValue(name)
 
-            getName.postValue(uidQuery.documents[0].get("name").toString())
-            birthdate.postValue(uidQuery.documents[0].get("birthdate").toString())
-            age.postValue(uidQuery.documents[0].get("age").toString().toInt())
-            gender.postValue(uidQuery.documents[0].get("gender").toString())
-            bloodType.postValue(uidQuery.documents[0].get("bloodType").toString())
-            height.postValue(uidQuery.documents[0].get("height").toString().toInt())
-            weight.postValue(uidQuery.documents[0].get("weight").toString().toInt())
-            allergies.postValue(uidQuery.documents[0].get("allergies").toString())
-            phone.postValue(uidQuery.documents[0].get("phoneNumber").toString())
-            language.postValue(uidQuery.documents[0].get("spokenLanguage").toString())
-            bmi.postValue(uidQuery.documents[0].get("bmi").toString().toFloat())
-            getTc.postValue(uidQuery.documents[0].get("tc").toString())
+                getTc.postValue(tc)
 
-            println(getTc)
+            } else {
+                getName.postValue(uidQuery.documents[0].get("name").toString())
+                birthdate.postValue(uidQuery.documents[0].get("birthdate").toString())
+                age.postValue(uidQuery.documents[0].get("age").toString().toInt())
+                gender.postValue(uidQuery.documents[0].get("gender").toString())
+                bloodType.postValue(uidQuery.documents[0].get("bloodType").toString())
+                height.postValue(uidQuery.documents[0].get("height").toString().toInt())
+                weight.postValue(uidQuery.documents[0].get("weight").toString().toInt())
+                allergies.postValue(uidQuery.documents[0].get("allergies").toString())
+                phone.postValue(uidQuery.documents[0].get("phoneNumber").toString())
+                language.postValue(uidQuery.documents[0].get("spokenLanguage").toString())
+                bmi.postValue(uidQuery.documents[0].get("bmi").toString().toFloat())
+                getTc.postValue(uidQuery.documents[0].get("tc").toString())
+
+                println(getTc)
+            }
+
 
 
         }

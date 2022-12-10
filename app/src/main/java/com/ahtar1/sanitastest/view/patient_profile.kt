@@ -121,6 +121,7 @@ class patient_profile : Fragment() {
 
         editProfileButton.setOnClickListener {
             counter++
+            println(counter)
             if (counter%2==1){
                 birthdateValueTextView.isEnabled = true
                 ageValueTextView.isEnabled = true
@@ -147,6 +148,8 @@ class patient_profile : Fragment() {
                 phoneValueTextView6.isEnabled = false
                 languageValueTextView.isEnabled = false
                 editProfileButton.text = "Edit"
+
+
 
                 val birthdate = birthdateValueTextView.text.toString()
                 val age = ageValueTextView.text.toString().toInt()
