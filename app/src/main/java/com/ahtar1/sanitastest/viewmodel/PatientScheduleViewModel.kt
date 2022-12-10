@@ -15,10 +15,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class PatientScheduleViewModel:ViewModel() {
-    private var appointmentsList:  MutableLiveData<ArrayList<DisplayAppointment>> = MutableLiveData()
+    lateinit var appointmentsList:  ArrayList<DisplayAppointment>
 
     fun getAppointments(){
-        appointmentsList.value= arrayListOf()
+        appointmentsList= arrayListOf()
         CoroutineScope(Dispatchers.Main).launch {
             val auth= FirebaseAuth.getInstance()
             val uid = auth.currentUser!!.uid
@@ -41,13 +41,16 @@ class PatientScheduleViewModel:ViewModel() {
                 println(date)
                 println(time)
                 println(doctorName)
-                val displayAppoinment= DisplayAppointment(date,time,doctorName)
+                val displayAppointment= DisplayAppointment(date,time,doctorName)
 
-                appointmentsList.value!!.add(displayAppoinment)
-                println(appointmentsList.value!!.forEach {
-                    println(it.date)
-                })
+                appointmentsList.add(displayAppointment)
+
             }
+            println(appointmentsList.forEach {
+                println(it.date)
+                println(it.doctorName)
+                println(it.time)
+            })
         }
     }
 
