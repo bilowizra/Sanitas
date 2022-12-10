@@ -42,11 +42,12 @@ class PatientProfileViewModel: ViewModel() {
             val query: QuerySnapshot = FirebaseFirestore.getInstance().collection("users").whereEqualTo("uid",uid).get().await()
             tc = query.documents[0].get("tc").toString()
             name = query.documents[0].get("name").toString()
+            val databaseRef= Firebase.firestore.collection("patients")
+            val patient= Patient(name,birthdate,age,gender, weight, height, bmi, bloodType, allergies, language, phone, tc, uid)
+            databaseRef.add(patient)
         }
 
-        val databaseRef= Firebase.firestore.collection("patients")
-        val patient= Patient("deneme",birthdate,age,gender, weight, height, bmi, bloodType, allergies, language, phone, tc, uid)
-        databaseRef.add(patient)
+
 
 
     }
