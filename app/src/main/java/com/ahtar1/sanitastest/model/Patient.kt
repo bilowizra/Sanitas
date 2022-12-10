@@ -15,6 +15,6 @@ data class Patient(
     var allergies:String?= null,
     var spokenLanguage:String?= null,
     var phoneNumber: Int?= null,
-    var tc:Int?= null,
+    var tc:String?= null,
     var uid:String?= null
 )

@@ -53,6 +53,7 @@ class RegisterActivity : AppCompatActivity() {
                     viewModel.role.observe(this, Observer {
                         sharedPreferences=this.getSharedPreferences("com.ahtar1.sanitastest",
                             Context.MODE_PRIVATE)
+
                         if(it.equals("Doctor")){
                             println("doctora git")
                             sharedPreferences.edit().putString("role","Doctor").apply()
@@ -61,6 +62,7 @@ class RegisterActivity : AppCompatActivity() {
                             finish()
                         } else{
                             sharedPreferences.edit().putString("role","Patient").apply()
+                            sharedPreferences.edit().putString("name",name).apply()
                             val intent= Intent(this,PatientActivity::class.java)
                             startActivity(intent)
                             finish()
@@ -180,7 +182,6 @@ class RegisterActivity : AppCompatActivity() {
                         if(it.result.documents.isEmpty()){
                             println("if "+it.result.documents.isEmpty())
                             println("girdi")
-                            sharedPreferences.edit().putString("name",name).apply()
                             viewModel.registerNewUser(email,password,tc,name)
                         } else{
                             println("else "+it.result.documents.isEmpty())

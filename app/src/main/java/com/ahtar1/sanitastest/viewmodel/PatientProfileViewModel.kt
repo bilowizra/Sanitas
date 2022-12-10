@@ -1,5 +1,9 @@
 package com.ahtar1.sanitastest.viewmodel
 
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.ahtar1.sanitastest.model.Patient
 import com.ahtar1.sanitastest.model.User
@@ -12,8 +16,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.math.BigInteger
 import java.util.Date
 
 class PatientProfileViewModel: ViewModel() {
@@ -22,6 +28,7 @@ class PatientProfileViewModel: ViewModel() {
     private lateinit var database: FirebaseDatabase
     private lateinit var tc: String
     private lateinit var name: String
+    //lateinit var sharedPreferences: SharedPreferences
 
 
     fun savePatient(birthdate:String, age: Int, gender:String, bloodType:String, height:Int, weight:Int, bmi:Float, allergies:String, phone:Int, language:String){
@@ -33,12 +40,12 @@ class PatientProfileViewModel: ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
 
             val query: QuerySnapshot = FirebaseFirestore.getInstance().collection("users").whereEqualTo("uid",uid).get().await()
-            tc=query.documents[0].get("tc").toString()
-            name=query.documents[0].get("name").toString()
+            tc = query.documents[0].get("tc").toString()
+            name = query.documents[0].get("name").toString()
         }
 
         val databaseRef= Firebase.firestore.collection("patients")
-        val patient= Patient(name,birthdate,age,gender, weight, height, bmi, bloodType, allergies, language, phone, tc.toInt(), uid)
+        val patient= Patient("deneme",birthdate,age,gender, weight, height, bmi, bloodType, allergies, language, phone, tc, uid)
         databaseRef.add(patient)
 
 

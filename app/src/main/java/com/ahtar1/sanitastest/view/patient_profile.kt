@@ -32,7 +32,6 @@ class patient_profile : Fragment() {
         viewModel= ViewModelProvider(this)[PatientProfileViewModel::class.java]
         sharedPreferences=this.requireActivity().getSharedPreferences("com.ahtar1.sanitastest",
             Context.MODE_PRIVATE)
-
     }
 
     override fun onCreateView(
@@ -89,25 +88,27 @@ class patient_profile : Fragment() {
                 editProfileButton.text = "Edit"
 
                 val birthdate = birthdateValueTextView.text.toString()
-                val age = ageValueTextView.text.toString()
+                val age = ageValueTextView.text.toString().toInt()
                 val gender= genderValueTextView.selectedItem.toString()
                 val bloodType = bloodTypeValueTextView.selectedItem.toString()
-                val height = heightValueTextView.text.toString()
-                val weight = weightValueTextView.text.toString()
+                val height = heightValueTextView.text.toString().toInt()
+                val weight = weightValueTextView.text.toString().toInt()
                 val allergies = allergiesValueTextView.text.toString()
-                val phone = phoneValueTextView6.text.toString()
-                val language = languageValueTextView.toString()
-                val bmi = weight.toString().toDouble()/(height.toString().toDouble()*height.toString().toDouble())
-
+                val phone = phoneValueTextView6.text.toString().toInt()
+                val language = languageValueTextView.text.toString()
+                val bmi = (weight.toString().toDouble()/(height.toString().toDouble()*height.toString().toDouble())).toFloat()*10000
                 val name=sharedPreferences.getString("name","N/A")
+
+                viewModel.savePatient(birthdate, age, gender, bloodType, height, weight, bmi, allergies, phone, language)
+
                 nameTextView.setText(name)
                 birthdateValueTextView.setText(birthdate)
-                ageValueTextView.setText(age)
-                heightValueTextView.setText(height)
-                weightValueTextView.setText(weight)
+                ageValueTextView.setText(age.toString())
+                heightValueTextView.setText(height.toString())
+                weightValueTextView.setText(weight.toString())
                 bmiValueTextView.setText(bmi.toString())
                 allergiesValueTextView.setText(allergies)
-                phoneValueTextView6.setText(phone)
+                phoneValueTextView6.setText(phone.toString())
                 languageValueTextView.setText(language)
 
 
