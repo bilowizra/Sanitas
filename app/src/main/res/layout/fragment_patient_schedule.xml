@@ -9,24 +9,41 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="100"
+        >
 
         <TextView
             android:id="@+id/appointmentsTitleTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
             android:gravity="center"
             android:text="Appointments"
             android:textSize="30sp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+
+            android:layout_weight="10"
             />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/appointmentsRecyclerView"/>
+            android:id="@+id/appointmentsRecyclerView"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+
+            android:layout_weight="82">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addAppointmentButton"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:text="Add Appointment"
+            android:icon="@drawable/ic_baseline_add_24"
+            />
+
     </LinearLayout>
 
 

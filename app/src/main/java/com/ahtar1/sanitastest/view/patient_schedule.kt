@@ -52,6 +52,12 @@ class patient_schedule : Fragment() {
         getAppointments()
         println("getAppointments dan sonra")
 
+        addAppointmentButton.setOnClickListener {
+            val fragmentTransaction = activity?.supportFragmentManager?.beginTransaction()
+            fragmentTransaction?.replace(R.id.frame_layout, patient_add_appointment())
+            fragmentTransaction?.commit()
+        }
+
     }
 
     private fun getAppointments(){
