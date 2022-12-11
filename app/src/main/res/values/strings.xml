@@ -28,4 +28,6 @@
     <string name="tc_id2">TC-ID</string>
     <string name="phone_number">Phone Number:</string>
     <string name="e_mail2">E-Mail:</string>
+    <string name="tc_id3">TC-ID:</string>
+    <string name="specialty">Specialty:</string>
 </resources>

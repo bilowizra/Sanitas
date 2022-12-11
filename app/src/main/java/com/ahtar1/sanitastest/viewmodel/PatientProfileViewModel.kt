@@ -79,9 +79,6 @@ class PatientProfileViewModel: ViewModel() {
 
         }
 
-
-
-
     }
     fun getPatient(){
         auth= FirebaseAuth.getInstance()
