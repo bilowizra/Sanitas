@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="288dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="290dp"
         android:layout_marginEnd="92dp"
         android:layout_toEndOf="@+id/docGenderTextView"
         android:layout_weight="10"
         android:editable="true"
-        android:inputType="number"
+        android:inputType="text"
         android:minHeight="48dp"
         android:text="N/A"
         android:textColor="@color/black"
@@ -30,15 +30,15 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="false"
-        android:layout_marginStart="-35dp"
-        android:layout_marginTop="388dp"
-        android:layout_marginEnd="127dp"
-        android:layout_toEndOf="@+id/docSpeTextView"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="390dp"
+        android:layout_marginEnd="116dp"
+        android:layout_toEndOf="@+id/docAgeTextView"
         android:layout_weight="10"
         android:editable="true"
         android:inputType="number"
         android:minHeight="48dp"
-        android:text="N/A"
+        android:text="@string/n_a"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -52,7 +52,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="400dp"
         android:text="Age:"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/specialtyValueEdit"
@@ -61,15 +62,15 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="false"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="338dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="340dp"
         android:layout_marginEnd="72dp"
         android:layout_toEndOf="@+id/docSpeTextView"
         android:layout_weight="10"
         android:editable="true"
-        android:inputType="number"
+        android:inputType="text"
         android:minHeight="48dp"
-        android:text="N/A"
+        android:text="@string/n_a"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -79,15 +80,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="238dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="240dp"
         android:layout_marginEnd="20dp"
         android:layout_toEndOf="@+id/docPhoneTextView"
         android:layout_weight="10"
         android:editable="true"
-        android:inputType="number"
+        android:inputType="phone"
         android:minHeight="48dp"
-        android:text="N/A"
+        android:text="@string/n_a"
         android:textColor="@color/black"
         android:textSize="20sp" />
 
@@ -96,10 +97,10 @@
         android:layout_width="224dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="200dp"
         android:layout_toEndOf="@+id/docTCTextView"
-        android:text="TC"
+        android:text="@string/tc"
         android:textSize="20sp" />
 
     <TextView
@@ -112,7 +113,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="350dp"
         android:text="@string/specialty"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/docGenderTextView"
@@ -123,8 +125,9 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="30dp"
         android:layout_marginTop="300dp"
-        android:text="Gender:"
-        android:textSize="20sp" />
+        android:text="@string/gender"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/docPhoneTextView"
@@ -135,7 +138,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="250dp"
         android:text="@string/phone_number"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/docTCTextView"
@@ -146,7 +150,8 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="200dp"
         android:text="@string/tc_id3"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -156,9 +161,10 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="46dp"
         android:layout_marginEnd="46dp"
-        android:text="Personal Information"
+        android:text="@string/personal_information"
         android:textColor="@color/red"
         android:textSize="34sp"
+        android:textStyle="bold"
         tools:ignore="RelativeOverlap" />
 
     <TextView
@@ -170,27 +176,28 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="150dp"
         android:text="@string/name"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/resName"
         android:layout_width="224dp"
         android:layout_height="30dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="19dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="150dp"
         android:layout_toEndOf="@+id/docNameTextView"
-        android:text="Name"
+        android:text="@string/name5"
         android:textSize="20sp" />
 
     <Button
         android:id="@+id/editDoctorProfileButton"
-        android:layout_width="164dp"
-        android:layout_height="61dp"
+        android:layout_width="165dp"
+        android:layout_height="62dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="193dp"
-        android:text="EDIT PROFILE"
+        android:text="@string/edit_profile"
         android:textSize="17sp" />
 
 

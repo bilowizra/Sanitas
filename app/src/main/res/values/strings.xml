@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sanitas Test</string>
+    <string name="app_name">Sanitas</string>
     <string name="title_activity_login2">LoginActivity2</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -30,4 +30,10 @@
     <string name="e_mail2">E-Mail:</string>
     <string name="tc_id3">TC-ID:</string>
     <string name="specialty">Specialty:</string>
+    <string name="tc">TC</string>
+    <string name="name5">Name</string>
+    <string name="personal_information">Personal Information</string>
+    <string name="n_a">N/A</string>
+    <string name="gender">Gender:</string>
+    <string name="edit_profile">EDIT PROFILE</string>
 </resources>

@@ -3,7 +3,6 @@ package com.ahtar1.sanitastest.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ahtar1.sanitastest.model.Doctor
-import com.ahtar1.sanitastest.model.Patient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
