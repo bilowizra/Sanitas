@@ -8,5 +8,4 @@ data class Doctor(
     var uid:String?= null,
     var phoneNumber: String?= null,
     var tc:String?= null,
-    //var mail:String?= null,
 )

@@ -37,7 +37,6 @@ class doctor_profile : Fragment() {
         return inflater.inflate(R.layout.fragment_doctor_profile, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -94,15 +93,7 @@ class doctor_profile : Fragment() {
 
                 ageValueEdit.setText(ageval.toString())
 
-
             }
-
-
-
         }
-
     }
-
-
-
 }

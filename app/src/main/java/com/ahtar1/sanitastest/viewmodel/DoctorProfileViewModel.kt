@@ -102,5 +102,4 @@ class DoctorProfileViewModel: ViewModel() {
             }
         }
     }
-
 }
