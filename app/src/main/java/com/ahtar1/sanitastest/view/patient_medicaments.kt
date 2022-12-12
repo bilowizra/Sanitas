@@ -23,6 +23,9 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.api.Context
 import kotlinx.android.synthetic.main.fragment_patient_medicaments.*
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import java.util.*
 
 
 class patient_medicaments : Fragment() {
@@ -130,27 +133,27 @@ class patient_medicaments : Fragment() {
         var alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, AlarmReceiver::class.java)
 
-        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        var pendingIntent =  PendingIntent.getBroadcast(requireContext() /*önceden this yazmıştım*/, 0, intent, 0)
 
         alarmManager.cancel(PendingIntent)
 
-        Toast.makeText(this,"Alarm Cancelled", Toast.LENGTH_LONG).show()
 
     }
+
 
     private fun setAlarm() {
         var alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(this, AlarmReceiver::class.java)
 
-        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0)
+        var pendingIntent = PendingIntent.getBroadcast(requireContext(), 0, intent, 0)
 
         alarmManager.setRepeating(
 
             AlarmManager.RTC_WAKEUP,calendar.timeInMillis,
             AlarmManager.INTERVAL_DAY, pendingIntent
         )
+        Toast.makeText(baseContext, "Service Cancelled", Toast.LENGTH_LONG).show()
 
-        Toast.makeText(this, "Alarm set Succesfuly", Toast.LENGTH_SHORT).show()
 
     }
 
