@@ -23,7 +23,7 @@ class PatientActivity : AppCompatActivity() {
                     true
                 }
                 R.id.medicaments -> {
-                    replaceFragment(patient_medicaments())
+                    replaceFragment(patient_view_medicaments())
                     true
                 }
                 R.id.profile -> {
