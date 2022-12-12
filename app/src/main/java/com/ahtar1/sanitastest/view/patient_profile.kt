@@ -6,17 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.viewmodel.PatientProfileViewModel
-import com.ahtar1.sanitastest.viewmodel.RegisterViewModel
 import kotlinx.android.synthetic.main.fragment_patient_profile.*
 
 
@@ -118,7 +112,7 @@ class patient_profile : Fragment() {
         })
 
 
-        editProfileButton.setOnClickListener {
+        editDoctorProfileButton.setOnClickListener {
             counter++
             println(counter)
             if (counter%2==1){
@@ -132,7 +126,7 @@ class patient_profile : Fragment() {
                 allergiesValueTextView.isEnabled = true
                 phoneValueTextView6.isEnabled = true
                 languageValueTextView.isEnabled = true
-                editProfileButton.text = "Save"
+                editDoctorProfileButton.text = "Save"
 
             }
             else{
@@ -146,7 +140,7 @@ class patient_profile : Fragment() {
                 allergiesValueTextView.isEnabled = false
                 phoneValueTextView6.isEnabled = false
                 languageValueTextView.isEnabled = false
-                editProfileButton.text = "Edit"
+                editDoctorProfileButton.text = "Edit"
 
 
 
