@@ -68,6 +68,8 @@ class patient_schedule : Fragment() {
 
     private fun getAppointments(){
         CoroutineScope(Dispatchers.Main).launch {
+            addAppointmentButton.isEnabled= false
+            progressBar2.visibility= View.VISIBLE
             val auth= FirebaseAuth.getInstance()
             val uid = auth.currentUser!!.uid
             println(uid)
@@ -99,6 +101,7 @@ class patient_schedule : Fragment() {
                 if(appointmentDate.isAfter(currentDate) || appointmentDate.isEqual(currentDate)){
                     val displayAppointment= DisplayAppointment(doctorName,date,time)
                     appointmentsList.add(displayAppointment)
+
                 }
 
 
@@ -114,6 +117,9 @@ class patient_schedule : Fragment() {
                 println(it.doctorName)
                 println(it.time)
             })
+
+            addAppointmentButton.isEnabled= true
+            progressBar2.visibility= View.GONE
         }
     }
 }
