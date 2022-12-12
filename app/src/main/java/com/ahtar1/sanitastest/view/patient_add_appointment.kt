@@ -43,16 +43,6 @@ class patient_add_appointment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         getDoctorNames()
 
-        //Burası çalışmıyor
-
-        doctorNameAddAppointmentTextView.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("doctorName", doctorNameAddAppointmentTextView.text.toString())
-            val fragment= patient_datetime_selection()
-            fragment.arguments = bundle
-            fragmentManager?.beginTransaction()?.replace(R.id.frame_layout, fragment)?.commit()
-        }
-
     }
 
     private fun getDoctorNames(){
@@ -65,7 +55,7 @@ class patient_add_appointment : Fragment() {
             }
             doctorsRecyclerView.layoutManager= LinearLayoutManager(context)
             println("a ")
-            val adapter= DoctorNamesAdapter(doctorsList)
+            val adapter= DoctorNamesAdapter(doctorsList,requireContext())
             doctorsRecyclerView.adapter=adapter
 
         }

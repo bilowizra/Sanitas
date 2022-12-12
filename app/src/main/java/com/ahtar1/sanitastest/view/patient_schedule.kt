@@ -24,6 +24,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class patient_schedule : Fragment() {
@@ -49,6 +54,7 @@ class patient_schedule : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        appointmentsRecyclerView.layoutManager= LinearLayoutManager(context)
         getAppointments()
         println("getAppointments dan sonra")
 
@@ -85,12 +91,20 @@ class patient_schedule : Fragment() {
                 println(date)
                 println(time)
                 println(doctorName)
-                val displayAppointment= DisplayAppointment(date,time,doctorName)
+                val appointmentDate=LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                val currentDate=LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 
-                appointmentsList.add(displayAppointment)
+                System.out.println(" C DATE is  "+currentDate)
+
+                if(appointmentDate.isAfter(currentDate) || appointmentDate.isEqual(currentDate)){
+                    val displayAppointment= DisplayAppointment(doctorName,date,time)
+                    appointmentsList.add(displayAppointment)
+                }
+
+
 
             }
-            appointmentsRecyclerView.layoutManager= LinearLayoutManager(context)
+
             println("a ")
             val adapter= AppointmentAdapter(appointmentsList)
             appointmentsRecyclerView.adapter=adapter
