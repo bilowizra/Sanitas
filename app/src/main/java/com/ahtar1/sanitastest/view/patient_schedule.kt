@@ -72,31 +72,22 @@ class patient_schedule : Fragment() {
             progressBar2.visibility= View.VISIBLE
             val auth= FirebaseAuth.getInstance()
             val uid = auth.currentUser!!.uid
-            println(uid)
             val uidQuery: QuerySnapshot = FirebaseFirestore.getInstance().collection("patients").whereEqualTo("uid",uid).get().await()
             val tc = uidQuery.documents[0].get("tc").toString()
-            println(tc)
             val database= Firebase.database("https://sanitas-8090c-default-rtdb.europe-west1.firebasedatabase.app")
             val query: QuerySnapshot = FirebaseFirestore.getInstance().collection("appointments").whereEqualTo("patientTc",tc).get().await()
-            println(query.documents.size)
             for (document in query.documents){
                 println("girdi")
                 val date = document.get("date").toString()
                 val time = document.get("time").toString()
                 val doctor = document.get("doctorTc").toString()
-                println("doctor name: "+doctor)
                 //get patient name from patient collection using patient tc
                 val query2: QuerySnapshot = FirebaseFirestore.getInstance().collection("doctors").whereEqualTo("tc",doctor).get().await()
 
                 val doctorName= query2.documents[0].get("name").toString()
-
-                println(date)
-                println(time)
-                println(doctorName)
                 val appointmentDate=LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                 val currentDate=LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
 
-                System.out.println(" C DATE is  "+currentDate)
 
                 if(appointmentDate.isAfter(currentDate) || appointmentDate.isEqual(currentDate)){
                     val displayAppointment= DisplayAppointment(doctorName,date,time)
@@ -104,19 +95,10 @@ class patient_schedule : Fragment() {
 
                 }
 
-
-
             }
-
-            println("a ")
             val adapter= AppointmentAdapter(appointmentsList)
+
             appointmentsRecyclerView.adapter=adapter
-            println(appointmentsList.size)
-            println(appointmentsList.forEach {
-                println(it.date)
-                println(it.doctorName)
-                println(it.time)
-            })
 
             addAppointmentButton.isEnabled= true
             progressBar2.visibility= View.GONE

@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1735" />
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/activity_doctor.xml" value="0.21403508771929824" />
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/activity_login.xml" value="0.20878623188405798" />
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/activity_main.xml" value="0.19519927536231885" />
@@ -18,6 +19,9 @@
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_patient_view_medicaments.xml" value="0.21403508771929824" />
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/medicament_recycler_view_row.xml" value="0.21403508771929824" />
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/recycler_view_row.xml" value="0.1" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/menu/bottom_nav_patient.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/menu/toolbar_menu.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/menu/toolbar_menu_doctor.xml" value="0.10394736842105264" />
       </map>
     </option>
   </component>

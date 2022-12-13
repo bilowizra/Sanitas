@@ -1,10 +1,14 @@
 package com.ahtar1.sanitastest.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.databinding.ActivityPatientBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class PatientActivity : AppCompatActivity() {
 
@@ -13,6 +17,8 @@ class PatientActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPatientBinding.inflate(layoutInflater)
+        setSupportActionBar(binding.toolbar)
+
         setContentView(binding.root)
         replaceFragment(patient_profile())
 
@@ -34,6 +40,27 @@ class PatientActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        var itemView= item.itemId
+        when(itemView){
+            R.id.signOutButton -> {
+                FirebaseAuth.getInstance().signOut()
+                finish()
+                val intent= Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            else -> false
+        }
+        return false
     }
 
     override fun onBackPressed() {

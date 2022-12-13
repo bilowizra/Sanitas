@@ -18,11 +18,15 @@ import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.viewmodel.LoginViewModel
 import com.ahtar1.sanitastest.viewmodel.MainViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var sharedPreferences: SharedPreferences
     private lateinit var auth: FirebaseAuth
     private lateinit var viewModel: MainViewModel
 
@@ -34,24 +38,32 @@ class MainActivity : AppCompatActivity() {
         } else {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         }
-        sharedPreferences=this.getSharedPreferences("com.ahtar1.sanitastest",Context.MODE_PRIVATE)
         viewModel= ViewModelProvider(this)[MainViewModel::class.java]
         auth= FirebaseAuth.getInstance()
 
-        if(auth.currentUser==null){
-            val intent= Intent(this,LoginActivity::class.java)
-            startActivity(intent)
+
+
+        CoroutineScope(Dispatchers.Main).launch {
+            if(auth.currentUser==null){
+                val intent= Intent(this@MainActivity,LoginActivity::class.java)
+                startActivity(intent)
+            }
+            println(auth.currentUser!!.uid)
+            val query=FirebaseFirestore.getInstance().collection("users").whereEqualTo("uid",auth.currentUser!!.uid).get().await()
+            val role= query.documents[0].get("role").toString()
+
+            if (role== "Doctor"){
+                val intent= Intent(this@MainActivity,DoctorActivity::class.java)
+                startActivity(intent)
+            } else if(role=="Patient"){
+                val intent= Intent(this@MainActivity,PatientActivity::class.java)
+                startActivity(intent)
+            } else{
+                println("empty")
+            }
         }
-        val roleFromSharedPreferences= sharedPreferences.getString("role","empty")
-        if (roleFromSharedPreferences== "Doctor"){
-            val intent= Intent(this,DoctorActivity::class.java)
-            startActivity(intent)
-        } else if(roleFromSharedPreferences=="Patient"){
-            val intent= Intent(this,PatientActivity::class.java)
-            startActivity(intent)
-        } else{
-            println("empty")
-        }
+
+
 
 
     }

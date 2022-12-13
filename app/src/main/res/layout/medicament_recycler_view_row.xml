@@ -20,6 +20,16 @@
             android:layout_gravity="center"
             android:background="#C5BFBF">
 
+            <Button
+                android:id="@+id/deleteMedicamentButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/ic_baseline_delete_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/medicamentNameTextView"
                 android:layout_width="wrap_content"

@@ -179,7 +179,10 @@ class patient_datetime_selection : Fragment() {
             }
             if(isTimeSelected) {
                 viewModel.saveAppointment(date, time, doctorName,requireActivity())
-
+                val fragmentManager = parentFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.frame_layout, patient_schedule())
+                fragmentTransaction.commit()
             }
         }
     }

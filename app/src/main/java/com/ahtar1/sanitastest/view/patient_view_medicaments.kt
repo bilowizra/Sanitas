@@ -39,18 +39,14 @@ class patient_view_medicaments : Fragment() {
         medicamentRecyclerView.layoutManager= LinearLayoutManager(context)
         getMedicaments()
 
-
     }
 
     private fun getMedicaments(){
 
         CoroutineScope(Dispatchers.Main).launch {
             val uid= FirebaseAuth.getInstance().currentUser!!.uid
-            val tcQuery= FirebaseFirestore.getInstance().collection("users").whereEqualTo("uid",uid).get().await()
 
-            val tc=tcQuery.documents[0].get("tc").toString()
-            println("şimdi "+tc)
-            val medicamentsQuery= FirebaseFirestore.getInstance().collection("medicaments").whereEqualTo("patientTc",tc).get().await()
+            val medicamentsQuery= FirebaseFirestore.getInstance().collection("medicaments").whereEqualTo("uid",uid).get().await()
 
             for (document in medicamentsQuery.documents){
                 val medicament=Medicament(document.get("name").toString(),document.get("time").toString())
