@@ -39,6 +39,13 @@ class patient_view_medicaments : Fragment() {
         medicamentRecyclerView.layoutManager= LinearLayoutManager(context)
         getMedicaments()
 
+        addMedicamentButton.setOnClickListener {
+            val fragment= patient_medicaments()
+            val transaction= activity?.supportFragmentManager?.beginTransaction()
+            transaction?.replace(R.id.frame_layout, fragment)
+            transaction?.commit()
+        }
+
     }
 
     private fun getMedicaments(){
