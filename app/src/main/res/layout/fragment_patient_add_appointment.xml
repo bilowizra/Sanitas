@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.patient_add_appointment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="100"
+        >
+
+            <TextView
+                android:id="@+id/appointmentsTitleTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="Doctors"
+                android:textSize="30sp"
+                android:layout_weight="10"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/doctorsRecyclerView"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+
+                android:layout_weight="90">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+       </LinearLayout>
+
+</FrameLayout>

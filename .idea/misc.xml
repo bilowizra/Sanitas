@@ -8,6 +8,16 @@
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/activity_main.xml" value="0.19519927536231885" />
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/activity_patient.xml" value="0.21403508771929824" />
         <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/activity_register.xml" value="0.20878623188405798" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/doctors_recycler_view_row.xml" value="0.2131578947368421" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_doctor_schedule.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_patient_add_appointment.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_patient_datetime_selection.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_patient_medicaments.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_patient_profile.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_patient_schedule.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/fragment_patient_view_medicaments.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/medicament_recycler_view_row.xml" value="0.21403508771929824" />
+        <entry key="..\:/Users/ahmet/Documents/Kotlin Projects/SanitasTest/app/src/main/res/layout/recycler_view_row.xml" value="0.1" />
       </map>
     </option>
   </component>

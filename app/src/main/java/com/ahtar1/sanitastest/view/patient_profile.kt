@@ -28,7 +28,6 @@ class patient_profile : Fragment() {
         sharedPreferences=this.requireActivity().getSharedPreferences("com.ahtar1.sanitastest",
             Context.MODE_PRIVATE)
 
-
     }
 
     override fun onCreateView(
@@ -115,6 +114,7 @@ class patient_profile : Fragment() {
 
         editDoctorProfileButton.setOnClickListener {
             counter++
+            println(counter)
             if (counter%2==1){
                 birthdateValueTextView.isEnabled = true
                 ageValueTextView.isEnabled = true
@@ -141,6 +141,8 @@ class patient_profile : Fragment() {
                 phoneValueTextView6.isEnabled = false
                 languageValueTextView.isEnabled = false
                 editDoctorProfileButton.text = "Edit"
+
+
 
                 val birthdate = birthdateValueTextView.text.toString()
                 val age = ageValueTextView.text.toString().toInt()
