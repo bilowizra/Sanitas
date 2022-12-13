@@ -1,19 +1,20 @@
 package com.ahtar1.sanitastest.view
 
+import android.R.attr.action
 import android.app.*
+import android.content.Context.ALARM_SERVICE
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.model.AddedMedicament
 import com.ahtar1.sanitastest.service.*
-import com.ahtar1.sanitastest.service.Notification
 import com.ahtar1.sanitastest.viewmodel.PatientMedicamentsViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_patient_medicaments.*
@@ -26,6 +27,9 @@ class patient_medicaments : Fragment() {
     var minute2: Long? = null
     private lateinit var viewModel: PatientMedicamentsViewModel
     var varSelectedTime= "girilmedi"
+    private lateinit var calendar: Calendar
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +37,8 @@ class patient_medicaments : Fragment() {
         createNotificationChannel()
 
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,9 +48,12 @@ class patient_medicaments : Fragment() {
         return inflater.inflate(R.layout.fragment_patient_medicaments, container, false)
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         cancelAlarmBtn.setOnClickListener {
+
             val fragment= patient_view_medicaments()
             val transaction= activity?.supportFragmentManager?.beginTransaction()
             transaction?.replace(R.id.frame_layout, fragment)
@@ -63,7 +72,18 @@ class patient_medicaments : Fragment() {
                 val medicament= AddedMedicament(medicamentName,varSelectedTime,FirebaseAuth.getInstance().currentUser!!.uid)
                 viewModel.saveMedicament(medicament)
 
+                alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
+                val intent = Intent(context, AlarmReceiver::class.java)
+                intent.putExtra("medicamentName",medicamentName)
+                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
+                alarmManager.set(
+                    AlarmManager.RTC_WAKEUP,
+                    calendar.timeInMillis,
+                    pendingIntent
+                )
+                println("Alarm set")
+                println(calendar.get(Calendar.HOUR_OF_DAY))
 
                 val fragment= patient_view_medicaments()
                 val transaction= activity?.supportFragmentManager?.beginTransaction()
@@ -97,58 +117,29 @@ class patient_medicaments : Fragment() {
                 selectedTime.text=time
                 println(time)
                 varSelectedTime=time
-                hour2= hourOfDay.toLong()
-                minute2= minute.toLong()
+
+                calendar = Calendar.getInstance()
+                calendar[Calendar.HOUR_OF_DAY] = hourOfDay
+                calendar[Calendar.MINUTE] = minute
+                calendar[Calendar.SECOND] = 1
+                calendar[Calendar.MILLISECOND] = 0
+
             },hour,minute,true).show()
         }
     }
 
+
     private fun createNotificationChannel() {
-        val name = "Notif Channel"
-        val desc = "A Description of the Channel"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelID, name, importance)
-        channel.description = desc
-        val notificationManager = getSystemService(requireContext(), NotificationManager::class.java)
-        notificationManager!!.createNotificationChannel(channel)
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.O){
+            val name: CharSequence="foxandroidReminderChannel"
+            val description="Channel for alarm Manager"
+            val importance =NotificationManager.IMPORTANCE_HIGH
+            val channel= NotificationChannel("channelId",name,importance)
+            channel.description= description
+            val notificationManager= requireActivity().getSystemService(NotificationManager::class.java)
+
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
-    private fun scheduleNotification()
-    {
-        val intent = Intent(context, Notification::class.java)
-        val title = medicineNameValueTextView.text.toString()
-        val message = "Time to take your medicine"
-        intent.putExtra(titleExtra, title)
-        intent.putExtra(messageExtra, message)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            notificationID,
-            intent,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-        )
-
-        val alarmManager = getSystemService(requireContext(), AlarmManager::class.java)
-        val time = getTime()
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            time,
-            pendingIntent
-        )
-        showAlert(time, title, message)
-    }
-    private fun getTime(): Long
-    {
-        val minute = minute2
-        val hour = hour2
-
-
-        val calendar = Calendar.getInstance()
-        calendar[Calendar.HOUR_OF_DAY] = hour!!.toInt()
-        calendar[Calendar.MINUTE] = minute!!.toInt()
-        calendar[Calendar.SECOND] = 0
-        if (calendar.time.compareTo(Date()) < 0) calendar.add(Calendar.DAY_OF_MONTH, 1)
-
-        return calendar.timeInMillis
-    }
 }

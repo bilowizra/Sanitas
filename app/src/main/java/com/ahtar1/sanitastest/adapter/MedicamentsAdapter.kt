@@ -1,5 +1,9 @@
 package com.ahtar1.sanitastest.adapter
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +11,7 @@ import com.ahtar1.sanitastest.databinding.MedicamentRecyclerViewRowBinding
 import com.ahtar1.sanitastest.databinding.RecyclerViewRowBinding
 import com.ahtar1.sanitastest.model.DisplayAppointment
 import com.ahtar1.sanitastest.model.Medicament
+import com.ahtar1.sanitastest.service.AlarmReceiver
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +39,7 @@ class MedicamentsAdapter(val medicamentList: ArrayList<Medicament>): RecyclerVie
                 val medicamentQuery= FirebaseFirestore.getInstance().collection("medicaments").whereEqualTo("name",medicamentList[position].name).whereEqualTo("uid",uid).get().await()
 
                 medicamentQuery.documents[0].reference.delete()
+
 
                 medicamentList.removeAt(position)
                 notifyItemRemoved(position)
