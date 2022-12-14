@@ -70,7 +70,7 @@ class patient_medicaments : Fragment() {
             else{
 
                 val medicamentName= medicineNameValueTextView.text.toString()
-                val notifID = (0..99999).random()
+                val notifID = (0..9999999).random()
                 val medicament= AddedMedicament(medicamentName,varSelectedTime,notifID.toString(),FirebaseAuth.getInstance().currentUser!!.uid)
                 viewModel.saveMedicament(medicament)
 
