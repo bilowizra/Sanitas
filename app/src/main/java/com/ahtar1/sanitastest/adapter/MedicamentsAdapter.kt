@@ -46,11 +46,17 @@ class MedicamentsAdapter(val medicamentList: ArrayList<Medicament>,val context: 
                 medicamentList.removeAt(position)
                 notifyItemRemoved(position)
                 notifyItemRangeChanged(position,medicamentList.size)
+
             }
 
-            val alarmManager= context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            val pendingIntent = PendingIntent.getBroadcast(context, 0, Intent(context, AlarmReceiver::class.java), PendingIntent.FLAG_IMMUTABLE)
-            alarmManager.cancel(pendingIntent)
+            CoroutineScope(Dispatchers.Main).launch {
+                val notifIDQuery= FirebaseFirestore.getInstance().collection("medicaments").whereEqualTo("uid",uid).get().await()
+                var notifID=notifIDQuery.documents[0].get("notifID").toString().toInt()
+                println("notifID: "+notifID)
+                val alarmManager= context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+                val pendingIntent = PendingIntent.getBroadcast(context, notifID, Intent(context, AlarmReceiver::class.java), PendingIntent.FLAG_IMMUTABLE)
+                alarmManager.cancel(pendingIntent)
+            }
 
         }
     }

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.model.AddedMedicament
@@ -30,6 +31,7 @@ class patient_medicaments : Fragment() {
     private lateinit var calendar: Calendar
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,14 +70,15 @@ class patient_medicaments : Fragment() {
             else{
 
                 val medicamentName= medicineNameValueTextView.text.toString()
-
-                val medicament= AddedMedicament(medicamentName,varSelectedTime,FirebaseAuth.getInstance().currentUser!!.uid)
+                val notifID = (0..99999).random()
+                val medicament= AddedMedicament(medicamentName,varSelectedTime,notifID.toString(),FirebaseAuth.getInstance().currentUser!!.uid)
                 viewModel.saveMedicament(medicament)
 
                 alarmManager = context?.getSystemService(ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmReceiver::class.java)
                 intent.putExtra("medicamentName",medicamentName)
-                pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+                pendingIntent = PendingIntent.getBroadcast(context, notifID, intent, PendingIntent.FLAG_IMMUTABLE)
 
                 alarmManager.set(
                     AlarmManager.RTC_WAKEUP,
