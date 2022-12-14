@@ -61,7 +61,7 @@ class patient_view_medicaments : Fragment() {
                 medicamentsList.add(medicament)
             }
 
-            val adapter= MedicamentsAdapter(medicamentsList)
+            val adapter= MedicamentsAdapter(medicamentsList,requireContext())
             println("list size "+medicamentsList.size)
             medicamentRecyclerView.adapter=adapter
         }

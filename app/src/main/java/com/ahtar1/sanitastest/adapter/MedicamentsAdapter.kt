@@ -2,10 +2,12 @@ package com.ahtar1.sanitastest.adapter
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import com.ahtar1.sanitastest.databinding.MedicamentRecyclerViewRowBinding
 import com.ahtar1.sanitastest.databinding.RecyclerViewRowBinding
@@ -19,7 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
-class MedicamentsAdapter(val medicamentList: ArrayList<Medicament>): RecyclerView.Adapter<MedicamentsAdapter.MedicamentHolder>() {
+class MedicamentsAdapter(val medicamentList: ArrayList<Medicament>,val context: Context): RecyclerView.Adapter<MedicamentsAdapter.MedicamentHolder>() {
 
     class MedicamentHolder(val binding: MedicamentRecyclerViewRowBinding): RecyclerView.ViewHolder(binding.root) {
     }
@@ -45,6 +47,10 @@ class MedicamentsAdapter(val medicamentList: ArrayList<Medicament>): RecyclerVie
                 notifyItemRemoved(position)
                 notifyItemRangeChanged(position,medicamentList.size)
             }
+
+            val alarmManager= context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val pendingIntent = PendingIntent.getBroadcast(context, 0, Intent(context, AlarmReceiver::class.java), PendingIntent.FLAG_IMMUTABLE)
+            alarmManager.cancel(pendingIntent)
 
         }
     }
