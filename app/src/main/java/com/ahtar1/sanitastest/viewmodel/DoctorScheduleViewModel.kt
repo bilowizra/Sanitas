@@ -21,25 +21,21 @@ class DoctorScheduleViewModel: ViewModel() {
 
     var apps: List<DocumentSnapshot> = emptyList()
 
-    var yearGlobal: Int = 0
-    var monthGlobal: Int = 0
-    var dayGlobal: Int = 0
+    var dateGlobal = ""
     var tcGlobal = ""
 
 
     @Suppress("DEPRECATION")
-    fun checkAppointment(year: Int, month: Int, day: Int) = CoroutineScope(Dispatchers.Main).launch{
+    suspend fun checkAppointment(date: String) = CoroutineScope(Dispatchers.Main).launch{
         auth = FirebaseAuth.getInstance()
         try {
-            yearGlobal = year
-            monthGlobal = month
-            dayGlobal = day
+            dateGlobal = date
             tcGlobal = FirebaseFirestore.getInstance().
             collection("users").whereEqualTo("email", auth.currentUser?.email)
                 .get().await().documents[0].get("tc").toString()
 
             var appointmentQuery = FirebaseFirestore.getInstance().
-            collection("appointments").whereEqualTo("date", "${day}/${month}/${year}")
+            collection("appointments").whereEqualTo("date", date)
                 .whereEqualTo("doctorTc", tcGlobal).get().await()
 
             apps = appointmentQuery.documents
@@ -49,12 +45,12 @@ class DoctorScheduleViewModel: ViewModel() {
         }
     }
 
-    fun EventChangeListener(list: ArrayList<DoctorsAppointment>, adapter: DoctorAppointmentAdapter){
+    suspend fun EventChangeListener(list: ArrayList<DoctorsAppointment>, adapter: DoctorAppointmentAdapter){
         list.clear()
         adapter.notifyDataSetChanged()
         db = FirebaseFirestore.getInstance()
 
-        db.collection("appointments").whereEqualTo("date", "${dayGlobal}/${monthGlobal}/${yearGlobal}")
+        db.collection("appointments").whereEqualTo("date", dateGlobal)
             .whereEqualTo("doctorTc", tcGlobal)
             .addSnapshotListener(object : EventListener<QuerySnapshot>{
                 override fun onEvent(value: QuerySnapshot?, error: FirebaseFirestoreException?) {

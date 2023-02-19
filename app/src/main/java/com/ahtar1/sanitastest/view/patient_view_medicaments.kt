@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.adapter.MedicamentsAdapter
@@ -55,7 +56,7 @@ class patient_view_medicaments : Fragment() {
 
     private fun getMedicaments(){
 
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             val uid= FirebaseAuth.getInstance().currentUser!!.uid
 
             val medicamentsQuery= FirebaseFirestore.getInstance().collection("medicaments").whereEqualTo("uid",uid).get().await()

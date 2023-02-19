@@ -19,7 +19,7 @@ class PatientDatetimeSelectionViewModel: ViewModel() {
     var hoursList = ArrayList<String>()
 
 
-    fun saveAppointment(date: String, time:String,doctorName:String,context: Context){
+    suspend fun saveAppointment(date: String, time:String,doctorName:String,context: Context){
         val uid= FirebaseAuth.getInstance().currentUser!!.uid
         CoroutineScope(Dispatchers.Main).launch {
             val patientTcQuery= FirebaseFirestore.getInstance().collection("patients").whereEqualTo("uid",uid).get().await()

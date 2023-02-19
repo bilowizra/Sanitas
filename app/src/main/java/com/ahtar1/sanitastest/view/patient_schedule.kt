@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.adapter.AppointmentAdapter
@@ -22,6 +23,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_patient_schedule.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
@@ -67,7 +69,7 @@ class patient_schedule : Fragment() {
     }
 
     private fun getAppointments(){
-        CoroutineScope(Dispatchers.Main).launch {
+        lifecycleScope.launch {
             addAppointmentButton.isEnabled= false
             progressBar2.visibility= View.VISIBLE
             val auth= FirebaseAuth.getInstance()

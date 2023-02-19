@@ -13,10 +13,7 @@ import com.ahtar1.sanitastest.viewmodel.PatientDatetimeSelectionViewModel
 import com.ahtar1.sanitastest.viewmodel.RegisterViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_patient_datetime_selection.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
 
 
@@ -134,7 +131,18 @@ class patient_datetime_selection : Fragment() {
         }
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            val selectedDate = "$dayOfMonth/${month + 1}/$year"
+            lateinit var selectedDate: String
+
+            if (month < 10 && dayOfMonth < 10) {
+                selectedDate = "0$dayOfMonth/0${month + 1}/$year"
+            } else if (month < 10) {
+                selectedDate = "$dayOfMonth/0${month + 1}/$year"
+            } else if (dayOfMonth < 10) {
+                selectedDate = "0$dayOfMonth/${month + 1}/$year"
+            } else {
+                selectedDate = "$dayOfMonth/${month + 1}/$year"
+            }
+
 
             nineCheckBox.isEnabled= true
             tenCheckBox.isEnabled= true
@@ -178,11 +186,14 @@ class patient_datetime_selection : Fragment() {
                 Toast.makeText(context, "Please select a time", Toast.LENGTH_SHORT).show()
             }
             if(isTimeSelected) {
-                viewModel.saveAppointment(date, time, doctorName,requireActivity())
-                val fragmentManager = parentFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.frame_layout, patient_schedule())
-                fragmentTransaction.commit()
+                runBlocking {
+                    viewModel.saveAppointment(date, time, doctorName,requireActivity())
+                    val fragmentManager = parentFragmentManager
+                    val fragmentTransaction = fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.frame_layout, patient_schedule())
+                    fragmentTransaction.commit()
+                }
+
             }
         }
     }

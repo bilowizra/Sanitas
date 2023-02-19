@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ahtar1.sanitastest.R
@@ -19,6 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_doctor_schedule.*
 import kotlinx.android.synthetic.main.fragment_patient_schedule.*
 import kotlinx.coroutines.NonDisposableHandle.parent
+import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 
@@ -59,14 +61,27 @@ class doctor_schedule : Fragment() {
 
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            when(viewModel.apps.size){
-                0 -> textView.hint = "You have no appointments in ${dayOfMonth}/${month + 1}/${year}"
-                1 -> textView.hint = "You have an appointment in ${dayOfMonth}/${month + 1}/${year}"
-                else -> textView.hint = "You have ${viewModel.apps.size} appointments in ${dayOfMonth}/${month + 1}/${year}"
+            lateinit var date: String
+            if (month < 10 && dayOfMonth < 10){
+                date = "${dayOfMonth}/0${month + 1}/0${dayOfMonth}"
+            } else if (month < 10){
+                date = "${dayOfMonth}/0${month + 1}/${year}"
+            } else if (dayOfMonth < 10){
+                date = "${dayOfMonth}/${month + 1}/${dayOfMonth}"
+            } else {
+                date = "${dayOfMonth}/${month + 1}/${dayOfMonth}"
             }
 
-            viewModel.checkAppointment(year, month + 1, dayOfMonth)
-            viewModel.EventChangeListener(appArrayList, doctorAppointmentAdapter)
+            when(viewModel.apps.size){
+                0 -> textView.hint = "You have no appointments in $date"
+                1 -> textView.hint = "You have an appointment in $date"
+                else -> textView.hint = "You have ${viewModel.apps.size} appointments in $date"
+            }
+            lifecycleScope.launch{
+                viewModel.checkAppointment(date).join()
+                viewModel.EventChangeListener(appArrayList, doctorAppointmentAdapter)
+            }
+
 
         }
     }
