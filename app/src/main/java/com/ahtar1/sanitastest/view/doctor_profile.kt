@@ -78,14 +78,14 @@ class doctor_profile : Fragment() {
             println(counter)
 
             if(counter%2==1){
-                editDoctorProfileButton.text = "SAVE"
+                editDoctorProfileButton.text = "SAVE PROFILE"
                 ageValueEdit.isEnabled = true
                 phoneValueEdit.isEnabled = true
                 specialtyValueEdit.isEnabled = true
                 genderValueEdit.isEnabled = true
 
             }else{
-                editDoctorProfileButton.text = "EDIT"
+                editDoctorProfileButton.text = "EDIT PROFILE"
                 ageValueEdit.isEnabled = false
                 phoneValueEdit.isEnabled = false
                 specialtyValueEdit.isEnabled = false
