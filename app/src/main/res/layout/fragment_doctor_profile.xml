@@ -192,16 +192,12 @@
 
     <Button
         android:id="@+id/editDoctorProfileButton"
-        android:layout_width="165dp"
-        android:layout_height="62dp"
-        android:layout_below="@+id/ageValueEdit"
-        android:layout_alignEnd="@+id/ageValueEdit"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="94dp"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="550dp"
+        android:layout_marginStart="110dp"
         android:text="@string/edit_profile"
-        android:textSize="17sp" />
+        android:textSize="20sp" />
 
 
 </RelativeLayout>

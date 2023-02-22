@@ -72,14 +72,16 @@ class doctor_schedule : Fragment() {
                 date = "${dayOfMonth}/${month + 1}/${dayOfMonth}"
             }
 
-            when(viewModel.apps.size){
-                0 -> textView.hint = "You have no appointments in $date"
-                1 -> textView.hint = "You have an appointment in $date"
-                else -> textView.hint = "You have ${viewModel.apps.size} appointments in $date"
-            }
+
             lifecycleScope.launch{
                 viewModel.checkAppointment(date).join()
                 viewModel.EventChangeListener(appArrayList, doctorAppointmentAdapter)
+
+                when(viewModel.apps.size){
+                    0 -> textView.hint = "You have no appointments in $date"
+                    1 -> textView.hint = "You have an appointment in $date"
+                    else -> textView.hint = "You have ${viewModel.apps.size} appointments in $date"
+                }
             }
 
 

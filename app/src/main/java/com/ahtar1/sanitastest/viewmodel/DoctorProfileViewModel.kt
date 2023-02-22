@@ -21,7 +21,7 @@ class DoctorProfileViewModel: ViewModel() {
     private lateinit var database: FirebaseDatabase
     private lateinit var tc: String
     private lateinit var name: String
-    //private lateinit var email: String
+    var counter=0
 
     var getName = MutableLiveData<String>()
     var age= MutableLiveData<Int>()
@@ -29,7 +29,6 @@ class DoctorProfileViewModel: ViewModel() {
     var specialty= MutableLiveData<String>()
     var phone= MutableLiveData<String>()
     var getTc= MutableLiveData<String>()
-    //var getEmail= MutableLiveData<String>()
 
     fun saveDoctor(age: Int, gender:String, specialty:String, phone:String){
 
@@ -84,8 +83,14 @@ class DoctorProfileViewModel: ViewModel() {
 
             //ifle kontrol
             if(uidQuery.documents.isEmpty()){
+
+                val usersQuery: QuerySnapshot = FirebaseFirestore.getInstance().collection("users").whereEqualTo("uid",uid).get().await()
+                name = usersQuery.documents[0].get("name").toString()
+                tc = usersQuery.documents[0].get("tc").toString()
                 getName.postValue(name)
                 getTc.postValue(tc)
+                //getName.postValue(name)
+                //getTc.postValue(tc)
                 //getEmail.postValue(email)
 
             }else {

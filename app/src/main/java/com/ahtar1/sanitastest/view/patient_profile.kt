@@ -154,7 +154,7 @@ class patient_profile : Fragment() {
                 val phone = phoneValueTextView6.text.toString()
                 val language = languageValueTextView.text.toString()
                 val bmi = (weight.toString().toDouble()/(height.toString().toDouble()*height.toString().toDouble())).toFloat()*10000
-                val name=sharedPreferences.getString("name","N/A")
+                val name= viewModel.getName.value.toString()
 
                 viewModel.savePatient(birthdate, age, gender, bloodType, height, weight, bmi, allergies, phone, language)
 

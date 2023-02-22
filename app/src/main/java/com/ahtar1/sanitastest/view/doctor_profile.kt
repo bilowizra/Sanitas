@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.ahtar1.sanitastest.R
 import com.ahtar1.sanitastest.viewmodel.DoctorProfileViewModel
 import kotlinx.android.synthetic.main.fragment_doctor_profile.*
+import kotlinx.coroutines.launch
 
 
 class doctor_profile : Fragment() {
@@ -44,14 +46,17 @@ class doctor_profile : Fragment() {
         specialtyValueEdit.isEnabled = false
         ageValueEdit.isEnabled = false
 
-        viewModel.getDoctor()
+        lifecycleScope.launch {
+            viewModel.getDoctor()
 
-        viewModel.getName.observe(viewLifecycleOwner,Observer{
-            resName.setText(it)
-        })
-        viewModel.getTc.observe(viewLifecycleOwner,Observer{
-            resTC.setText(it)
-        })
+            viewModel.getName.observe(viewLifecycleOwner,Observer{
+                resName.setText(it)
+            })
+            viewModel.getTc.observe(viewLifecycleOwner,Observer{
+                resTC.setText(it)
+            })
+        }
+
         //viewModel.getEmail.observe(viewLifecycleOwner,Observer{
         //    resMail.setText(it)
         //})
@@ -73,12 +78,14 @@ class doctor_profile : Fragment() {
             println(counter)
 
             if(counter%2==1){
+                editDoctorProfileButton.text = "SAVE"
                 ageValueEdit.isEnabled = true
                 phoneValueEdit.isEnabled = true
                 specialtyValueEdit.isEnabled = true
                 genderValueEdit.isEnabled = true
 
             }else{
+                editDoctorProfileButton.text = "EDIT"
                 ageValueEdit.isEnabled = false
                 phoneValueEdit.isEnabled = false
                 specialtyValueEdit.isEnabled = false
@@ -90,8 +97,6 @@ class doctor_profile : Fragment() {
                 val genderval = genderValueEdit.text.toString()
 
                 viewModel.saveDoctor(ageval,genderval,specialtyval,phoneval)
-
-                ageValueEdit.setText(ageval.toString())
 
             }
         }
